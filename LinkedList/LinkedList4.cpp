@@ -5,27 +5,27 @@ struct Node {
     Node* next;
 };
 
-Node* head;
-
-void insert(int data, int n) {
+Node* push_back(Node* h, int data) {
     Node* temp1 = new Node();
     temp1->data = data;
     temp1->next = NULL;
-    if(n==1) {
-        temp1->next = head;
-        head = temp1;
-        return;
+    if(h==NULL) {
+        temp1->next = h;
+        h = temp1;
+        return h;
     }
-    Node* temp2 = head;
-    for(int i=0; i<n-2; i++) {
-        temp2 = temp2->next;
+    else {
+        Node* temp2 = h;
+        while(temp2->next!=NULL)
+            temp2 = temp2->next;
+        temp1->next = temp2->next;
+        temp2->next = temp1;
+        return h;
     }
-    temp1->next = temp2->next;
-    temp2->next = temp1;
 }
 
-void Print() {
-    Node* temp = head;
+void Print(Node* h) {
+    Node* temp = h;
     printf("List is: ");
     while(temp!=NULL) {
         printf("%d ", temp->data);
@@ -34,13 +34,38 @@ void Print() {
     printf("\n");
 }
 
-int main() {
-    
-    for(int i=1; i<6; i++) {
-        insert(i,i);
+Node* reverse(Node* h) {
+    Node *prev, *Next, *current;
+    current = h;
+    prev =  NULL;
+    while(current!=NULL) {
+        Next = current->next;
+        current->next = prev;
+        prev = current;
+        current = Next;
     }
+    h = prev;
+    return h;
+}
 
-    Print();
+int main() {
+
+    Node* head = NULL;
+    
+    head = push_back(head, 2);
+    head = push_back(head, 4);
+    head = push_back(head, 6);
+    head = push_back(head, 8);
+
+    printf("before reversing the linked list:\n");
+
+    Print(head);
+
+    printf("After reversing the linked list:\n");
+
+    head = reverse(head);
+
+    Print(head);
 
     return 0;
 
