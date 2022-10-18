@@ -22,6 +22,9 @@ bool dfs(int s, int parent) {
 
 int main() {
 
+    for(int i=0; i<N; ++i)
+        visited[i] = 0;
+
     int node, edges;
     cin >> node >> edges;
 
